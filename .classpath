@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="AppGame/src"/>
+	<classpathentry kind="src" path="escola/Escola/src"/>
+	<classpathentry kind="src" path="EstudoDeCasoWeg/src"/>
+	<classpathentry kind="src" path="Jogo/src"/>
+	<classpathentry kind="src" path="LojaVirtual/src"/>
+	<classpathentry kind="lib" path="core.jar"/>
+	<classpathentry kind="output" path="AppGame/bin"/>
+</classpath>

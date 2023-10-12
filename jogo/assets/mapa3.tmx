@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2018.01.01" orientation="orthogonal" renderorder="right-down" width="240" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="15">
+ <tileset firstgid="1" source="tileset2.tsx"/>
+ <tileset firstgid="441" source="tilesetMario.tsx"/>
+ <tileset firstgid="1995" source="tilesetCave2.tsx"/>
+ <tileset firstgid="2411" source="tilesetCave.tsx"/>
+ <tileset firstgid="2635" source="tileset3mario.tsx"/>
+ <layer name="fundo" width="240" height="30" offsetx="-21" offsety="63.5">
+  <data encoding="base64" compression="zlib">
+   eJzt3TuSgkAQgGHNCL2DJzDfOxBwTu9obe1ahTgzzrO7x/6DLwB5jMgvYOL9fDrdv8D1Avij3R39AvW25U+oiedrqWVSy6fUNBpa/zmtfRwBDbGmctsraba041CnqYYtSB3f0nVrtgG/clvo2e9xm6PGLIV+oaWk3xH7pl/6RT0L/dY8R2sftz36hZbS++fe+7bWYg36hXWjOqNf+sV4lp5/raFfYF70C8yLfoF50S+krf+O87THJa1HP/QLaal+PXbcgn4hKdTpGpmPz+gXktaDbXlvWXuMuSyc+/QLaaGGt4XrcA36haR9nyHbEn4+znXb0X6vEugXkkKdxqZL3BK03/NI9AtpsWtvyz0z/dIvZLU2+yvVbY+erZ/flseG7zZDv9b9XF7lrBO77lr+DphhjN6MvGf20rKXfmFLj+de+qVfyOvx21WPdumXfoHZtPb7af3abbdsdxTtz8oa7f9NQBv69U37/AP90i/9ekW/vj0Ac732rQ==
+  </data>
+ </layer>
+ <layer name="grafico" width="240" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAdwNwgAAB
+  </data>
+ </layer>
+ <objectgroup name="chao">
+  <object id="1" x="684.667" y="399.333" width="79.3333" height="17.3333"/>
+  <object id="3" x="796" y="317.333" width="78.6667" height="18"/>
+  <object id="4" x="-18.6667" y="478" width="582" height="64.6667"/>
+  <object id="5" x="566" y="477.333" width="627.333" height="65.3333"/>
+  <object id="6" x="1194" y="477.333" width="561.333" height="66.6667"/>
+  <object id="7" x="1758" y="479.333" width="31.3333" height="62"/>
+  <object id="8" x="1050.67" y="269.333" width="94.6667" height="19.3333"/>
+  <object id="9" x="1792" y="480.667" width="176" height="61.3333"/>
+  <object id="14" x="1325" y="419" width="62" height="58"/>
+ </objectgroup>
+</map>

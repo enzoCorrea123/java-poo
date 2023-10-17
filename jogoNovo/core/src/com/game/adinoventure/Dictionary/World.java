@@ -3,10 +3,10 @@ package com.game.adinoventure.Dictionary;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.game.adinoventure.Blocks.Block;
-
+//ECS - entity component system
 public class World {
 	private int[][] map = new int[80][45]; // 1280/16 e 720/16
-
+	com.artemis.World world;
 	public World() {
 
 	}

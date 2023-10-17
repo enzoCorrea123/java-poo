@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.game.adinoventure.Blocks.Block;
 
 public class World {
-	public int[][] map = new int[80][45]; // 1280/16 e 720/16
+	private int[][] map = new int[80][45]; // 1280/16 e 720/16
 
 	public World() {
 
@@ -23,18 +23,24 @@ public class World {
 			}
 		}
 	}
+	
 
 	public void render(Batch batch) {
+		renderBackground(batch);
+	}
+
+	private void renderBackground(Batch batch) {
 		Texture texture = null;
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getHeigth(); y++) {
-				texture = Blocks.getBlockbyId(map[x][y]).texture;
+				texture = getBlock(x, y).texture;
 
 				if (texture != null) {
 					batch.draw(texture, x * Block.TILE_SIZE, y * Block.TILE_SIZE);
 				}
 			}
 		}
+		
 	}
 
 	public Block getBlock(int x, int y) {

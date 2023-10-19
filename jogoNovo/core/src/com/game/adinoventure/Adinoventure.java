@@ -36,7 +36,7 @@ public class Adinoventure extends Game {
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.setToOrtho(false);
 		viewport = new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),camera);
-		world = new World();
+		world = new World(camera);
 		world.regenerate();
 		
 	}
@@ -46,9 +46,8 @@ public class Adinoventure extends Game {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		batch.begin();
-		world.render(batch);
-		batch.end();
+		world.update(Gdx.graphics.getDeltaTime());
+
 	}
 	
 	public void resize(int width, int height) {

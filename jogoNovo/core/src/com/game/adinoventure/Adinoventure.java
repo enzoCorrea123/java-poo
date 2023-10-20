@@ -24,10 +24,11 @@ public class Adinoventure extends Game {
 	
 	protected World world;
 	
-	public Adinoventure() {
-		instance = this;
-	}
-	public Adinoventure getInstance() {
+	private Adinoventure() {}
+	public static Adinoventure getInstance() {
+		if(instance == null) {
+			instance = new Adinoventure();
+		}
 		return instance;
 	}
 	@Override
@@ -56,5 +57,6 @@ public class Adinoventure extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		world.dispose();
 	}
 }

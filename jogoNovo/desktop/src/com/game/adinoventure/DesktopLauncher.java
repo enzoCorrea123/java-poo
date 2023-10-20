@@ -13,6 +13,6 @@ public class DesktopLauncher {
 		config.setResizable(false);//não mudar o tamanho da janela
 		config.useVsync(true);
 		config.setTitle("Adinoventure");
-		new Lwjgl3Application(new Adinoventure(), config);
+		new Lwjgl3Application(Adinoventure.getInstance(), config);
 	}
 }

@@ -46,5 +46,9 @@ public class TileRenderSystem extends BaseSystem{
 	protected void end() {
 		batch.end();
 	}
+	@Override
+	protected void dispose() {
+		batch.dispose();
+	}
 
 }

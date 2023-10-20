@@ -18,10 +18,16 @@ public class SpriteRenderSystem extends IteratingSystem{
 	SpriteBatch batch;
 	public SpriteRenderSystem(OrthographicCamera camera) {
 		super(Aspect.all(TransformComponent.class,SpriteComponent.class));
-		batch = new SpriteBatch();
 		this.camera = camera;
+		batch = new SpriteBatch();
+		
 	}
 	
+	@Override
+	protected void begin() {
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+	}
 	
 
 	@Override
@@ -39,6 +45,16 @@ public class SpriteRenderSystem extends IteratingSystem{
 		spriteComponent.sprite.setRotation(transformComponent.rotation);
 		spriteComponent.sprite.setPosition(transformComponent.position.x, transformComponent.position.y);
 		spriteComponent.sprite.draw(batch);
+	}
+	
+	@Override
+	protected void end() {
+		batch.end();
+		
+	}
+	@Override
+	protected void dispose() {
+		batch.dispose();
 	}
 	
 	

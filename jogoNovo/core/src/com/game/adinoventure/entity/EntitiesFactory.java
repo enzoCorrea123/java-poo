@@ -6,6 +6,7 @@ import com.artemis.World;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.adinoventure.entity.component.PlayerComponent;
+import com.game.adinoventure.entity.component.RigidBodyComponent;
 import com.game.adinoventure.entity.component.SpriteComponent;
 import com.game.adinoventure.entity.component.TransformComponent;
 
@@ -24,6 +25,9 @@ public class EntitiesFactory {
 		
 		PlayerComponent playerComponent = new PlayerComponent();
 		entityEdit.add(playerComponent);
+		
+		RigidBodyComponent rigidBodyComponent = new RigidBodyComponent();
+		entityEdit.add(rigidBodyComponent);
 		
 		return entity;
 		

@@ -3,6 +3,7 @@ package com.game.adinoventure.Dictionary;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.IntMap;
 import com.game.adinoventure.Blocks.Block;
+import com.game.adinoventure.resource.Assets;
 
 public class Blocks {
 	
@@ -28,11 +29,11 @@ public class Blocks {
 	
 	static{
 		AIR = register(AIR_ID, new Block(null));
-		TERRA = register(1, new Block(new Texture("terra.png")));
-		PEDRA = register(2, new Block(new Texture("pedra.png")));
-		TIJOLO = register(3, new Block(new Texture("tijolo.png")));
-		PAREDE = register(4, new Block(new Texture("parede (1).png")));
-		FUNDO = register(5, new Block(new Texture("fundo.png")));
+		TERRA = register(1, new Block(Assets.manager.get(Assets.terra)));
+		PEDRA = register(2, new Block(Assets.manager.get(Assets.pedra)));
+		TIJOLO = register(3, new Block(Assets.manager.get(Assets.tijolo)));
+		PAREDE = register(4, new Block(Assets.manager.get(Assets.parede)));
+		FUNDO = register(5, new Block(Assets.manager.get(Assets.fundo)));
 		
 		
 	}

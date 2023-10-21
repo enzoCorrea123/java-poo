@@ -31,7 +31,7 @@ public SpriteBatch batch;
 		world = new World(camera);
 		world.regenerate();
 		
-		if(Adinoventure.DEBUG) {
+		/*if(Adinoventure.DEBUG) {
 			final int player = world.getPlayer();
 			Gdx.input.setInputProcessor(new InputAdapter() {
 				@Override
@@ -41,7 +41,7 @@ public SpriteBatch batch;
 					return true;
 				}
 			});
-		}
+		}*/
 		
 	}
 
@@ -52,7 +52,7 @@ public SpriteBatch batch;
 		
 		world.update(delta);
 		if(Adinoventure.DEBUG) {
-			if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			if(Gdx.input.isKeyPressed(Input.Keys.Y)) {
 				if(world.getEntityTrackerMainWindow() != null) {
 					world.getEntityTrackerMainWindow().setVisible(!world.getEntityTrackerMainWindow().isVisible());
 			}

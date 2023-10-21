@@ -10,6 +10,7 @@ import com.game.adinoventure.Adinoventure;
 import com.game.adinoventure.Blocks.Block;
 import com.game.adinoventure.entity.EntitiesFactory;
 import com.game.adinoventure.entity.system.MovementSystem;
+import com.game.adinoventure.entity.system.PlayerControllerSystem;
 import com.game.adinoventure.entity.system.SpriteRenderSystem;
 import com.game.adinoventure.entity.system.TileRenderSystem;
 
@@ -30,6 +31,7 @@ public class World {
 	public World(OrthographicCamera camera) {
 		//definido sistemas
 		WorldConfigurationBuilder worldConfigBuilder = new WorldConfigurationBuilder()
+				.with(new PlayerControllerSystem())
 				.with(new MovementSystem(this))
 				.with(new TileRenderSystem(this, camera))
 				.with(new SpriteRenderSystem(camera));

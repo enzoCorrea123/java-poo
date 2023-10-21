@@ -11,7 +11,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.adinoventure.Dictionary.World;
+import com.game.adinoventure.resource.Assets;
 import com.game.adinoventure.screen.GameScreen;
+import com.game.adinoventure.screen.PreloadScreen;
 
 public class Adinoventure extends Game {
 	
@@ -20,7 +22,7 @@ public class Adinoventure extends Game {
 	
 	@Override
 	public void create() {
-		this.setScreen(new GameScreen());
+		this.setScreen(new PreloadScreen());
 		
 	}
 	
@@ -30,6 +32,10 @@ public class Adinoventure extends Game {
 			instance = new Adinoventure();
 		}
 		return instance;
+	}
+	@Override
+	public void dispose() {
+		Assets.manager.dispose();
 	}
 	
 	

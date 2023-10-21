@@ -32,11 +32,12 @@ public SpriteBatch batch;
 		world.regenerate();
 		
 		if(Adinoventure.DEBUG) {
+			final int player = world.getPlayer();
 			Gdx.input.setInputProcessor(new InputAdapter() {
 				@Override
 				public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-					world.getPlayer().getComponent(TransformComponent.class).position.set(screenX,Gdx.graphics.getHeight() - screenY);
-					world.getPlayer().getComponent(RigidBodyComponent.class).velocity.set(0, 0);
+					world.getWorld().getEntity(player).getComponent(TransformComponent.class).position.set(screenX,Gdx.graphics.getHeight() - screenY);
+					world.getWorld().getEntity(player).getComponent(RigidBodyComponent.class).velocity.set(0, 0);
 					return true;
 				}
 			});

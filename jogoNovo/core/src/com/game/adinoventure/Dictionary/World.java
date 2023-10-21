@@ -23,7 +23,9 @@ public class World {
 	private EntityTrackerMainWindow entityTrackerMainWindow;
 	private float gravity = -576;//gravidade está puxando o personagem para baixo
 	private int ground = 2;
-	private Entity player;
+	private int player;
+
+	private EntitiesFactory entitiesFactory;
 
 	public World(OrthographicCamera camera) {
 		//definido sistemas
@@ -39,8 +41,10 @@ public class World {
 		WorldConfiguration config = worldConfigBuilder.build();
 		//definiu valor para o mundo
 		world = new com.artemis.World(config);
+		entitiesFactory = new EntitiesFactory();
+		world.inject(entitiesFactory);
 		//criou uma entitdade para o mundo
-		player = EntitiesFactory.createPlayer(world, 0, getHeigth() * Block.TILE_SIZE);
+		player = entitiesFactory.createPlayer(world, 0, getHeigth() * Block.TILE_SIZE);
 	}
 
 	public EntityTrackerMainWindow getEntityTrackerMainWindow() {
@@ -64,7 +68,7 @@ public class World {
 		world.process();
 		
 	}
-	public Entity getPlayer() {
+	public int getPlayer() {
 		return player;
 	}
 	public int getGround() {
@@ -85,6 +89,10 @@ public class World {
 	
 	public float getGravity() {
 		return gravity;
+	}
+
+	public com.artemis.World getWorld() {
+		return world;
 	}
 
 	public void setGravity(float gravity) {

@@ -1,5 +1,6 @@
 package com.game.adinoventure.entity;
 
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.EntityEdit;
 import com.artemis.World;
@@ -11,23 +12,23 @@ import com.game.adinoventure.entity.component.SpriteComponent;
 import com.game.adinoventure.entity.component.TransformComponent;
 
 public class EntitiesFactory {
-	public static Entity createPlayer(World world, float x, float y) {
-		Entity entity = world.createEntity();
-		EntityEdit entityEdit = entity.edit();
+
+	private ComponentMapper<TransformComponent> transformMapper;
+	private ComponentMapper<RigidBodyComponent> rigidBodyMapper;
+	private ComponentMapper<PlayerComponent> playerMapper;
+	private ComponentMapper<SpriteComponent> spriteMapper;
+	public int createPlayer(World world, float x, float y) {
+		int entity = world.create();
 		
-		TransformComponent transformComponent = new TransformComponent();
+		TransformComponent transformComponent = transformMapper.create(entity);
 		transformComponent.position.set(x,y);
-		
-		entityEdit.add(transformComponent);
-		SpriteComponent spriteComponent = new SpriteComponent();
+
+		SpriteComponent spriteComponent = spriteMapper.create(entity);
 		spriteComponent.sprite = new Sprite(new Texture("./roar.png"));
-		entityEdit.add(spriteComponent);
 		
-		PlayerComponent playerComponent = new PlayerComponent();
-		entityEdit.add(playerComponent);
+		PlayerComponent playerComponent = playerMapper.create(entity);
 		
-		RigidBodyComponent rigidBodyComponent = new RigidBodyComponent();
-		entityEdit.add(rigidBodyComponent);
+		RigidBodyComponent rigidBodyComponent = rigidBodyMapper.create(entity);
 		
 		return entity;
 		

@@ -8,9 +8,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.adinoventure.Adinoventure;
+import com.game.adinoventure.Dictionary.Tiled;
 import com.game.adinoventure.Dictionary.World;
+import com.game.adinoventure.entity.component.PlayerComponent;
 import com.game.adinoventure.entity.component.RigidBodyComponent;
 import com.game.adinoventure.entity.component.TransformComponent;
 
@@ -23,13 +27,17 @@ public SpriteBatch batch;
 	
 	protected World world;
 	
+	private PlayerComponent player = new PlayerComponent();
+	
+	private Tiled tiled = new Tiled();
+	
 	public void show () {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.setToOrtho(false);
-		viewport = new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),camera);
+		camera.setToOrtho(false);//evita deixar de cabeça para baixo
+		viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+		camera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
 		world = new World(camera);
-		world.regenerate();
 		
 		/*if(Adinoventure.DEBUG) {
 			final int player = world.getPlayer();
@@ -49,8 +57,11 @@ public SpriteBatch batch;
 	public void render (float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+		cameraFollowPlayer(delta);
+		camera.update();
 		world.update(delta);
+		tiled.viewMap(camera);
+		
 		if(Adinoventure.DEBUG) {
 			if(Gdx.input.isKeyPressed(Input.Keys.Y)) {
 				if(world.getEntityTrackerMainWindow() != null) {
@@ -61,6 +72,15 @@ public SpriteBatch batch;
 		}
 		
 
+	}
+	private void cameraFollowPlayer(float delta) {
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			camera.position.x += 5;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			camera.position.x -= 5;
+		}
+		
 	}
 	
 	public void resize(int width, int height) {

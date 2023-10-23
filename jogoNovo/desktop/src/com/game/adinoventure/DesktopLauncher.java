@@ -9,9 +9,7 @@ import com.game.adinoventure.dino.Dino;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setWindowedMode(1280, 720);//resolução HD
-		config.setResizable(false);//não mudar o tamanho da janela
-		config.useVsync(true);
+		config.setWindowedMode(800, 480);//resolução HD
 		config.setTitle("Adinoventure");
 		new Lwjgl3Application(Adinoventure.getInstance(), config);
 	}

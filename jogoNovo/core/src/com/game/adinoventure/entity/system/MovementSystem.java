@@ -31,7 +31,8 @@ public class MovementSystem extends IteratingSystem{
 		velocityY += world.getGravity() * delta;
 		transformComponent.setVelocityY(velocityY);
 		
-		if(collidableComponent != null) {
+		if(collidableMapper.has(entityId)) {
+			collidableComponent.getCollisionBox().setCenter(transformComponent.getPosition());
 			if(transformComponent.getPositionY() < world.getGround() * Block.TILE_SIZE) {
 				transformComponent.setVelocityY(0);
 				transformComponent.setPositionY(world.getGround() * Block.TILE_SIZE);

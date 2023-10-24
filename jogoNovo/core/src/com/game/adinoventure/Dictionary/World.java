@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.game.adinoventure.Adinoventure;
 import com.game.adinoventure.Blocks.Block;
 import com.game.adinoventure.entity.EntitiesFactory;
-import com.game.adinoventure.entity.system.MovementSystem;
-import com.game.adinoventure.entity.system.PlayerControllerSystem;
-import com.game.adinoventure.entity.system.SpriteRenderSystem;
-import com.game.adinoventure.entity.system.TileRenderSystem;
+import com.game.adinoventure.entity.system.*;
 
 import net.namekdev.entity_tracker.EntityTracker;
 import net.namekdev.entity_tracker.ui.EntityTrackerMainWindow;
@@ -34,6 +31,7 @@ public class World {
 				.with(new SpriteRenderSystem(camera));
 		
 		if(Adinoventure.DEBUG) {//inspecionador de entitades
+			worldConfigBuilder.with(new CollisionDebugSystem(camera));
 			entityTrackerMainWindow = new EntityTrackerMainWindow(false,false);
 			worldConfigBuilder.with(new EntityTracker(entityTrackerMainWindow));
 		}

@@ -2,20 +2,15 @@ package com.game.adinoventure.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.adinoventure.Adinoventure;
 import com.game.adinoventure.Dictionary.Tiled;
 import com.game.adinoventure.Dictionary.World;
-import com.game.adinoventure.entity.component.PlayerComponent;
-import com.game.adinoventure.entity.component.RigidBodyComponent;
 import com.game.adinoventure.entity.component.TransformComponent;
 
 public class GameScreen extends ScreenAdapter{
@@ -27,7 +22,7 @@ public SpriteBatch batch;
 	
 	protected World world;
 	
-	private PlayerComponent player = new PlayerComponent();
+	private TransformComponent transformComponent = new TransformComponent();
 	
 	private Tiled tiled = new Tiled();
 	
@@ -75,12 +70,12 @@ public SpriteBatch batch;
 	}
 	private void cameraFollowPlayer(float delta) {
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			camera.position.x += 5;
+			camera.position.x += 4;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-			camera.position.x -= 5;
+			camera.position.x -= 4;
 		}
-		
+
 	}
 	
 	public void resize(int width, int height) {

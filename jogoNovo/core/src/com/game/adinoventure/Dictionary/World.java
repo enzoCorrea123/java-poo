@@ -1,11 +1,8 @@
 package com.game.adinoventure.Dictionary;
 
-import com.artemis.Entity;
 import com.artemis.WorldConfiguration;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.game.adinoventure.Adinoventure;
 import com.game.adinoventure.Blocks.Block;
 import com.game.adinoventure.entity.EntitiesFactory;
@@ -75,10 +72,6 @@ public class World {
 	}
 	public int getGround() {
 		return ground;
-	}
-	public Block getBlock(int x, int y) {
-		return Blocks.getBlockbyId(map[x][y]);
-
 	}
 
 	public int getWidth() {

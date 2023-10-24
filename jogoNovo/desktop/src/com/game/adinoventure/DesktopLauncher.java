@@ -12,5 +12,6 @@ public class DesktopLauncher {
 		config.setWindowedMode(800, 480);//resolução HD
 		config.setTitle("Adinoventure");
 		new Lwjgl3Application(Adinoventure.getInstance(), config);
+		//oi Enzo.
 	}
 }

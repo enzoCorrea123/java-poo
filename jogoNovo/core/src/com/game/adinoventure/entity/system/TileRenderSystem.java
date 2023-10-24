@@ -2,10 +2,8 @@ package com.game.adinoventure.entity.system;
 
 import com.artemis.BaseSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.game.adinoventure.Blocks.Block;
 import com.game.adinoventure.Dictionary.Tiled;
 import com.game.adinoventure.Dictionary.World;
 

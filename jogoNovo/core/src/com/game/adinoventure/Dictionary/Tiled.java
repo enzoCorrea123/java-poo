@@ -13,7 +13,7 @@ public class Tiled {
 	public Tiled() {
 		mapLoader = new TmxMapLoader();
 		map = mapLoader.load("mapaAdinoventure1.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 2);
+		renderer = new OrthogonalTiledMapRenderer(map);
 	}
 	
 	public void viewMap(OrthographicCamera camera) {
@@ -21,5 +21,13 @@ public class Tiled {
 	}
 	public void mapRender() {
 		renderer.render();
+	}
+
+	public TiledMap getMap() {
+		return map;
+	}
+
+	public void setMap(TiledMap map) {
+		this.map = map;
 	}
 }

@@ -3,6 +3,7 @@ package com.game.adinoventure;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,6 +20,7 @@ public class Adinoventure extends Game {
 	
 	public static final boolean DEBUG = true;
 	private static Adinoventure instance;
+	FPSLogger fpsLogger = new FPSLogger();
 	
 	@Override
 	public void create() {
@@ -32,6 +34,11 @@ public class Adinoventure extends Game {
 			instance = new Adinoventure();
 		}
 		return instance;
+	}
+	@Override
+	public void render() {
+		super.render();
+		fpsLogger.log();
 	}
 	@Override
 	public void dispose() {

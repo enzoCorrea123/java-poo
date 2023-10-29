@@ -70,10 +70,10 @@ public SpriteBatch batch;
 	}
 	private void cameraFollowPlayer(float delta) {
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			camera.position.x += 4;
+			camera.position.x += 2;
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-			camera.position.x -= 4;
+			camera.position.x -= 2;
 		}
 
 	}

@@ -6,17 +6,20 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.game.adinoventure.Dictionary.Tiled;
 import com.game.adinoventure.Dictionary.World;
+import com.game.adinoventure.entity.component.CollidableComponent;
 
 public class TileRenderSystem extends BaseSystem{
 	private World world;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Tiled tiled;
+	CollidableComponent collidableComponent;
 	public TileRenderSystem(World world, OrthographicCamera camera) {
 		this.world = world;
 		this.camera = camera;
 		this.batch = new SpriteBatch();
 		tiled = new Tiled();
+		collidableComponent = new CollidableComponent();
 	}
 	@Override
 	protected void begin() {
@@ -28,21 +31,18 @@ public class TileRenderSystem extends BaseSystem{
 	@Override
 	protected void processSystem() {
 		renderBackground(batch);
+		collidableComponent.collidableGround();
+		collidableComponent.colldiableBrick();
+		collidableComponent.collidableStone();
+		collidableComponent.collidableSpike();
+		collidableComponent.collidableDoor();
+		collidableComponent.collidableWall();
 		
 	}
 
 	private void renderBackground(Batch batch) {
-		/*Texture texture = null;
-		for (int x = 0; x < world.getWidth(); x++) {
-			for (int y = 0; y < world.getHeigth(); y++) {
-				texture = world.getBlock(x, y).texture;
-
-				if (texture != null) {
-					batch.draw(texture, x * Block.TILE_SIZE, y * Block.TILE_SIZE);
-				}
-			}
-		}*/
 		tiled.mapRender();
+		collidableComponent.renderCollidable(camera);
 		
 	}
 	@Override

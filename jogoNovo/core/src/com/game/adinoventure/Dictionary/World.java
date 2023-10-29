@@ -28,10 +28,11 @@ public class World {
 				.with(new PlayerControllerSystem())
 				.with(new MovementSystem(this))
 				.with(new TileRenderSystem(this, camera))
+				.with(new CollisionSystem(camera))
 				.with(new SpriteRenderSystem(camera));
 		
 		if(Adinoventure.DEBUG) {//inspecionador de entitades
-			worldConfigBuilder.with(new CollisionDebugSystem(camera));
+			//worldConfigBuilder.with(new CollisionSystem(camera));
 			entityTrackerMainWindow = new EntityTrackerMainWindow(false,false);
 			worldConfigBuilder.with(new EntityTracker(entityTrackerMainWindow));
 		}

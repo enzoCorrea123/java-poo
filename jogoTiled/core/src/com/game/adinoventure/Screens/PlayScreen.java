@@ -30,16 +30,16 @@ public class PlayScreen implements Screen {
 	private Hud hud;
 	private Dino dino;
 	private Tiled tiled;
-
+	private Texture texture;
 	public PlayScreen(Adinoventure game) {
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new FitViewport(Adinoventure.width, Adinoventure.height);
 		hud = new Hud(game.batch);
 		tiled = new Tiled();
-		// dino = new Roar();
-		// dino.changeDino();
-		// texture = dino.getTexture();
+		 dino = new Roar();
+		 dino.changeDino();
+		 texture = dino.getTexture();
 		gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight()/2, 0);
 	}
 
@@ -65,13 +65,12 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void render(float delta) {// limpando a tela
-		update(delta);
 		//handleClick();
-		//Gdx.gl.glClearColor(0, 0, 0, 1);// cores - preto
-		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);// limpa a tela
-		tiled.mapRender();
+		Gdx.gl.glClearColor(0, 0, 0, 1);// cores - preto
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);// limpa a tela
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-		hud.stage.draw();
+		tiled.mapRender();
+		update(delta);
 	}
 
 	public void handleClick() {

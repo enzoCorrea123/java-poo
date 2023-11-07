@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.game.dinos.Dino;
 import com.game.dinos.Poing;
@@ -20,24 +21,59 @@ public class PlayScreen implements Screen {
 	OrthographicCamera camera;
 	Dino dino;
 	Collidable collidable;
+	World world;
 	
+	
+	public Tiled getTiled() {
+		return tiled;
+	}
+
+	public void setTiled(Tiled tiled) {
+		this.tiled = tiled;
+	}
+
+	public Dino getDino() {
+		return dino;
+	}
+
+	public void setDino(Dino dino) {
+		this.dino = dino;
+	}
+
+	public Collidable getCollidable() {
+		return collidable;
+	}
+
+	public void setCollidable(Collidable collidable) {
+		this.collidable = collidable;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
 
 	@Override
 	public void show() {// método chamado quando a tela vira a atual
-		tiled = new Tiled();
+		tiled = new Tiled(this);
+		world = new World(new Vector2(0,-10), true);
 		camera = new OrthographicCamera();
+		
 		dino = new Roar();
 		Gdx.input.setInputProcessor(dino);
-		dino.setTexture(new Texture(dino.changeDino()));
-		dino = new Roar(new Sprite(dino.getTexture()));
+		dino.setTexture(dino.changeDino());
+		dino = new Roar(new Sprite(dino.getTexture()), this);
 		dino.setPosition(0, 100);
-		collidable = new Collidable();
+		
+		collidable = new Collidable(this);
 		collidable.collidableBrick();
 		collidable.collidableDoor();
 		collidable.collidableGround();
 		collidable.collidableSpike();
 		collidable.collidableWall();
-		
 
 	}
 
@@ -53,24 +89,27 @@ public class PlayScreen implements Screen {
 		tiled.beginRenderer();
 		dino.draw(tiled.getRenderer().getBatch());
 		tiled.endRenderer();
+		world.step(Gdx.graphics.getDeltaTime(), 5, 5);
+		System.out.println(dino.getY());
 
 	}
 
 	public void handleInput() {
+		//world.destroyBody(dino.getBody());
 		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
 			dino = new Poing();
-			dino.setTexture(new Texture(dino.changeDino()));
-			dino = new Poing(new Sprite(dino.getTexture()));
+			dino.setTexture(dino.changeDino());
+			dino = new Poing(new Sprite(dino.getTexture()), this);
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
 			dino = new Tum();
-			dino.setTexture(new Texture(dino.changeDino()));
-			dino = new Tum(new Sprite(dino.getTexture()));
+			dino.setTexture(dino.changeDino());
+			dino = new Tum(new Sprite(dino.getTexture()), this);
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
 			dino = new Roar();
-			dino.setTexture(new Texture(dino.changeDino()));
-			dino = new Roar(new Sprite(dino.getTexture()));
+			dino.setTexture(dino.changeDino());
+			dino = new Roar(new Sprite(dino.getTexture()), this);
 		}
 
 	}

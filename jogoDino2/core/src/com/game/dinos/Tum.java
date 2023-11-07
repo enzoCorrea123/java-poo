@@ -3,12 +3,13 @@ package com.game.dinos;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.game.screens.PlayScreen;
 
 public class Tum extends Dino{
 
 	@Override
-	public String changeDino() {
-		return "tum.png";
+	public Texture changeDino() {
+		return new Texture("tum.png");
 		
 	}
 
@@ -17,8 +18,8 @@ public class Tum extends Dino{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Tum(Sprite sprite) {
-		super(sprite);
+	public Tum(Sprite sprite, PlayScreen screen) {
+		super(sprite, screen);
 		// TODO Auto-generated constructor stub
 	}
 

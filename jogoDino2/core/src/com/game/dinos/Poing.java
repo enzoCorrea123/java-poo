@@ -3,12 +3,13 @@ package com.game.dinos;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.game.screens.PlayScreen;
 
 public class Poing extends Dino{
 
 	@Override
-	public String changeDino() {
-		return "poing.png";
+	public Texture changeDino() {
+		return new Texture("poing.png");
 		
 	}
 
@@ -17,8 +18,8 @@ public class Poing extends Dino{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Poing(Sprite sprite) {
-		super(sprite);
+	public Poing(Sprite sprite, PlayScreen screen) {
+		super(sprite, screen);
 		// TODO Auto-generated constructor stub
 	}
 

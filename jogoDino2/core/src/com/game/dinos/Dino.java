@@ -1,53 +1,81 @@
 package com.game.dinos;
 
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.game.screens.PlayScreen;
 
 public abstract class Dino extends Sprite implements InputProcessor {
 	public Vector2 velocity = new Vector2();
 	protected float speed = 60 * 2;
 	protected float gravity = 60 * 1.8f;
-	protected Texture texture;
+	protected float velocityX = 0, velocityY = 0;
+	protected Texture texture = new Texture("roar.png");
 	private TiledMapTileLayer collisionLayer;
-	
+	private BodyDef bodyDef;
+	private PolygonShape polygonShape;
+	private FixtureDef fixture;
+	private Body body;
+	private World world;
 	public Dino() {
 
 	}
 
-	public Dino(Sprite sprite) {
+
+	public Body getBody() {
+		return body;
+	}
+
+
+	public void setBody(Body body) {
+		this.body = body;
+	}
+
+
+	public Dino(Sprite sprite, PlayScreen screen) {
 		super(sprite);
-        
+		this.world = screen.getWorld();
+		bodyDef = new BodyDef();
+        polygonShape = new PolygonShape();
+        fixture = new FixtureDef();
+        collisionDino();
 	}
 	
-	public abstract String changeDino();
+	public abstract Texture changeDino();
 
 	@Override
 	public void draw(Batch batch) {
 		super.draw(batch);
+		batch.draw(texture, body.getPosition().x - (texture.getWidth() / 2), body.getPosition().y - (texture.getHeight() / 2));
 		update(Gdx.graphics.getDeltaTime());
 	}
 
 	private void update(float delta) {
-		// aplicando gravidade
-		velocity.y -= gravity * delta;
-		if (velocity.y > speed) {
-			velocity.y = speed;
-
-		} else if (velocity.y < speed) {
-			velocity.y = -speed;
-		}
+    	bodyDef.position.set(getX(), getY());
 		
-		setX(getX() + velocity.x * delta);
-		setY(getY() + velocity.y * delta);
-
+	}
+	private void collisionDino() {
+		bodyDef.type = BodyType.DynamicBody;
+    	bodyDef.position.set(getX() + getWidth() / 2, getY() + getHeight()/2);
+    	bodyDef.position.set(50, 100);
+		
+    	body = world.createBody(bodyDef);
+    	polygonShape.setAsBox(getWidth() / 2, getHeight() / 2);
+    	fixture.shape = polygonShape;
+    	body.createFixture(fixture);
+    	
+    	
+    
 	}
 	
 	public Texture getTexture() {
@@ -89,78 +117,3 @@ public abstract class Dino extends Sprite implements InputProcessor {
 		this.collisionLayer = collisionLayer;
 	}
 }
-/*float oldX = getX();
-float oldY = getY();
-float tileWidth = collisionLayer.getTileWidth();
-float tileHeight = collisionLayer.getTileHeight();
-boolean collisionX = false;
-boolean collisionY = false;
-//movimentar no eixo x
-setX(getX() + velocity.x * delta);
-if(velocity.x<0) {//se movimentando para a esquerda no x
-	//cima
-	collisionX = collisionLayer.getCell((int) (getX() / tileWidth),(int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-	//meio
-	if(!collisionX) {
-		collisionX = collisionLayer.getCell((int) (getX() / tileWidth),(int) ((getY() + getHeight() / 2) / tileHeight)).getTile().getProperties().containsKey("blocked");
-	}
-	//chao
-	if(!collisionX) {
-		collisionX = collisionLayer.getCell((int) (getX() / tileWidth),(int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-		
-	}
-	
-}else if(velocity.x>0) {//se movimentando para a direita no x
-	
-	//cima
-	collisionX = collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth),(int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-	//meio
-	if(!collisionX) {
-		collisionX = collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth),(int) ((getY() + getHeight() / 2) / tileHeight)).getTile().getProperties().containsKey("blocked");
-	}
-	//chao
-	if(!collisionX) {
-		collisionX = collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth),(int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-		
-	}
-}
-//reagindo na colisao do x
-if(collisionX) {
-	setX(oldX);
-	velocity.x = 0;
-		
-}
-//movimentar no eixo y
-setY(getY() + velocity.y * delta);
-if(velocity.y<0) {//se movimentando para a esquerda no y
-	
-	//baixo esquerda
-	collisionY = collisionLayer.getCell((int) (getX() / tileWidth),(int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-	//baixo meio
-	if(!collisionY) {
-		collisionY = collisionLayer.getCell((int) ((getX() + getWidth()/2) / tileWidth),(int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-	}
-	//b
-	if(!collisionY) {
-		collisionY = collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth),(int) (getY() / tileHeight)).getTile().getProperties().containsKey("blocked");
-	}
-	
-}else if(velocity.y>0) {//se movimentando para a direita no y
-	//cima
-	collisionY = collisionLayer.getCell((int) (getX() / tileWidth),(int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-	//meio
-	if(!collisionY) {
-		collisionY = collisionLayer.getCell((int) ((getX() + getWidth()/2) / tileWidth),(int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-	}
-	//chao
-	if(!collisionY) {
-		collisionY = collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth),(int) ((getY() + getHeight()) / tileHeight)).getTile().getProperties().containsKey("blocked");
-	}
-}
-//reagindo na colisao do x
-		if(collisionY) {
-			setY(oldY);
-			velocity.y = 0;
-				
-		}
-*/

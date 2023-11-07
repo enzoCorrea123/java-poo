@@ -1,25 +1,26 @@
 package com.game.physics;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.game.dinos.Dino;
 import com.game.dinos.Roar;
+import com.game.screens.PlayScreen;
 import com.game.utils.Tiled;
 
 public class Collidable {
 	private World world;
 	private Tiled tiled;
+	PlayScreen screen;
 	private Box2DDebugRenderer debugRenderer;
 	private BodyDef bodyDef;
 	private PolygonShape polygonShape;
@@ -28,18 +29,19 @@ public class Collidable {
 	private Dino dino;
 	private float rectanglePositionX; 
 	private float rectanglePositionY; 
-	public Collidable() {
-		world = new World(new Vector2(0, -10), true);
+	public Collidable(PlayScreen screen) {
+		this.screen = screen;
+		this.world = screen.getWorld();
 		debugRenderer = new Box2DDebugRenderer();
 		bodyDef = new BodyDef();
         polygonShape = new PolygonShape();
         fixture = new FixtureDef();
-        tiled = new Tiled();
+        this.tiled = screen.getTiled();
         dino = new Roar();
 	}
 	
 	public void collidableTiled(int indexLayer) {
-		for(MapObject object : tiled.getMap().getLayers().get(indexLayer).getObjects().getByType(RectangleMapObject.class)) {//chão
+		for(MapObject object : tiled.getMap().getLayers().get(indexLayer).getObjects().getByType(RectangleMapObject.class)) {
         	Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
         	
         	bodyDef.type = BodyType.StaticBody;
@@ -57,11 +59,11 @@ public class Collidable {
 		float oldX = dino.getX();
 		float oldY = dino.getY();
 		if(dino.getY() == rectanglePositionY) {
-			dino.setY(32);
+			dino.setY(rectanglePositionY);
 			dino.velocity.y = 0;
 		}
 		if(dino.getX() == rectanglePositionX) {
-			dino.setX(11);
+			dino.setX(rectanglePositionX);
 			dino.velocity.x = 0;
 		}
 	}

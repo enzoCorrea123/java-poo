@@ -5,13 +5,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.game.screens.PlayScreen;
 
 public class Tiled {
 	private TmxMapLoader mapLoader;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
-	
-	public Tiled() {
+	PlayScreen screen;
+	public Tiled(PlayScreen screen) {
+		this.screen = screen;
 		mapLoader = new TmxMapLoader();
 		map = mapLoader.load("mapaAdinoventure1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map);//pode alterar a escala

@@ -1,13 +1,15 @@
 package com.game.dinos;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.game.screens.PlayScreen;
 
 public class Roar extends Dino{
 	
 	@Override
-	public String changeDino() {
-		return "roar.png";
+	public Texture changeDino() {
+		return new Texture("roar.png");
 		
 	}
 
@@ -16,8 +18,8 @@ public class Roar extends Dino{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Roar(Sprite sprite) {
-		super(sprite);
+	public Roar(Sprite sprite, PlayScreen screen) {
+		super(sprite, screen);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,19 +27,21 @@ public class Roar extends Dino{
 	public boolean keyDown(int keycode) {
 		switch(keycode) {
 		case Keys.W:
+			
 			break;
 		case Keys.A:
-			velocity.x = -speed;
+			velocityX = 2.0f;
 			break;
 		case Keys.S:
 			break;
 		case Keys.D:
-			velocity.x = speed;
+			velocityX = -2.0f;
 			break;
 		case Keys.SPACE:
 			break;
 		
 		}
+		getBody().setLinearVelocity(velocityX, velocityY);
 		return true;
 	}
 
@@ -46,9 +50,10 @@ public class Roar extends Dino{
 		switch(keycode) {
 		case Keys.A:
 		case Keys.D:
-			velocity.x = 0;
+			velocityX = 0;
 			break;
 		}
+		getBody().setLinearVelocity(velocityX, velocityY);
 		return true;
 	}
 

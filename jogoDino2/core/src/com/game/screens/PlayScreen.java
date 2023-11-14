@@ -114,6 +114,8 @@ public class PlayScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		camera.position.set(currentDino.getX() + currentDino.getWidth() / 2, currentDino.getY() + currentDino.getHeight() / 2, 0);
+		
 		tiled.viewMap(camera);
 		tiled.mapRender();
 		tiled.beginRenderer();
@@ -141,8 +143,8 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		camera.viewportWidth = width;
-		camera.viewportHeight = height;
+		camera.viewportWidth = width / 2;
+		camera.viewportHeight = height / 2;
 		camera.update();
 
 	}

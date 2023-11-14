@@ -1,103 +1,77 @@
 package com.game.dinos;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.game.screens.PlayScreen;
 
 public class Roar extends Dino{
-	
-	@Override
-	public Texture changeDino() {
-		return new Texture("roar.png");
-		
-	}
+	private float speed = 5.0f; // Velocidade de movimento
+    private boolean crouching = false; // Estado de agachamento
 
-	public Roar() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public Roar(Body body, Texture texture) {
+        super(body, texture);
+    }
 
-	public Roar(Sprite sprite, PlayScreen screen) {
-		super(sprite, screen);
-		// TODO Auto-generated constructor stub
-	}
+    @Override
+    public void update(float delta) {
+        // Atualiza a posição e verifica a lógica do estado (por exemplo, agachamento)
+        body.setLinearVelocity(getMovementVelocity());	
+        checkCrouching();
+    }
 
-	@Override
-	public boolean keyDown(int keycode) {
-		switch(keycode) {
-		case Keys.W:
-			
-			break;
-		case Keys.A:
-			velocityX = 2.0f;
-			break;
-		case Keys.S:
-			break;
-		case Keys.D:
-			velocityX = -2.0f;
-			break;
-		case Keys.SPACE:
-			break;
-		
-		}
-		getBody().setLinearVelocity(velocityX, velocityY);
-		return true;
-	}
+    @Override
+    public void render(SpriteBatch batch) {
+    	batch.draw(texture, body.getPosition().x, body.getPosition().y);
+    }
 
-	@Override
-	public boolean keyUp(int keycode) {
-		switch(keycode) {
-		case Keys.A:
-		case Keys.D:
-			velocityX = 0;
-			break;
-		}
-		getBody().setLinearVelocity(velocityX, velocityY);
-		return true;
-	}
+    @Override
+    public void handleInput() {
+        // Lógica de entrada para movimento e agachamento
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            moveLeft();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moveRight();
+        }
 
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            crouching = true;
+        } else {
+            crouching = false;
+        }
+    }
 
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    private void moveLeft() {
+        body.applyLinearImpulse(-speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+    }
 
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    private void moveRight() {
+        body.applyLinearImpulse(speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+    }
 
-	@Override
-	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    private void checkCrouching() {
+        // Lógica para alterar o estado/tamanho do corpo quando agachado
+        if (crouching) {
+            // Reduzir o tamanho do corpo ou alterar a hitbox
+        } else {
+            // Restaurar o tamanho original do corpo ou hitbox
+        }
+    }
 
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(float amountX, float amountY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    private com.badlogic.gdx.math.Vector2 getMovementVelocity() {
+        float xVelocity = 0;
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            xVelocity = -speed;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            xVelocity = speed;
+        }
+        return new com.badlogic.gdx.math.Vector2(xVelocity, body.getLinearVelocity().y);
+    }
 	
 
 }

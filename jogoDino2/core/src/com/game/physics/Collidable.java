@@ -37,7 +37,6 @@ public class Collidable {
         polygonShape = new PolygonShape();
         fixture = new FixtureDef();
         this.tiled = screen.getTiled();
-        dino = new Roar();
 	}
 	
 	public void collidableTiled(int indexLayer) {
@@ -55,18 +54,7 @@ public class Collidable {
         	rectanglePositionY = body.getPosition().y;
         }
 	}
-	public void checkCollision() {
-		float oldX = dino.getX();
-		float oldY = dino.getY();
-		if(dino.getY() == rectanglePositionY) {
-			dino.setY(rectanglePositionY);
-			dino.velocity.y = 0;
-		}
-		if(dino.getX() == rectanglePositionX) {
-			dino.setX(rectanglePositionX);
-			dino.velocity.x = 0;
-		}
-	}
+	
 	public void renderDebugLines(OrthographicCamera camera) {
 		debugRenderer.render(world, camera.combined);
 	}

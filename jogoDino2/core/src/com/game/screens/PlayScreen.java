@@ -7,7 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.game.dinos.Dino;
 import com.game.dinos.Poing;
@@ -19,54 +25,27 @@ import com.game.utils.Tiled;
 public class PlayScreen implements Screen {
 	Tiled tiled;
 	OrthographicCamera camera;
-	Dino dino;
+	Dino roar, poing, tum;
+	Dino currentDino;
 	Collidable collidable;
 	World world;
-	
-	
-	public Tiled getTiled() {
-		return tiled;
-	}
-
-	public void setTiled(Tiled tiled) {
-		this.tiled = tiled;
-	}
-
-	public Dino getDino() {
-		return dino;
-	}
-
-	public void setDino(Dino dino) {
-		this.dino = dino;
-	}
-
-	public Collidable getCollidable() {
-		return collidable;
-	}
-
-	public void setCollidable(Collidable collidable) {
-		this.collidable = collidable;
-	}
-
-	public World getWorld() {
-		return world;
-	}
-
-	public void setWorld(World world) {
-		this.world = world;
-	}
-
+	Box2DDebugRenderer debugRenderer;
+	private SpriteBatch batch;
 	@Override
 	public void show() {// mÃ©todo chamado quando a tela vira a atual
 		tiled = new Tiled(this);
-		world = new World(new Vector2(0,-10), true);
-		camera = new OrthographicCamera();
+		world = new World(new Vector2(0,-9.81f), true);
 		
-		dino = new Roar();
-		Gdx.input.setInputProcessor(dino);
-		dino.setTexture(dino.changeDino());
-		dino = new Roar(new Sprite(dino.getTexture()), this);
-		dino.setPosition(0, 100);
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		
+		debugRenderer = new Box2DDebugRenderer();
+		batch = new SpriteBatch();
+		
+	    poing = initializePoing();
+	    tum = initializeTum();
+	    roar = initializeRoar();
+		currentDino = roar;
 		
 		collidable = new Collidable(this);
 		collidable.collidableBrick();
@@ -77,40 +56,86 @@ public class PlayScreen implements Screen {
 
 	}
 
+	private Dino initializeTum() {
+		BodyDef bodyDef = new BodyDef();
+	    bodyDef.type = BodyDef.BodyType.DynamicBody;
+	    // Defina a posição inicial do Roar
+	    bodyDef.position.set(new Vector2(10, 50));
+
+	    Body body = world.createBody(bodyDef);
+
+	    PolygonShape shape = new PolygonShape();
+	    shape.setAsBox(20, 40); // Exemplo de tamanho
+	    FixtureDef fixtureDef = new FixtureDef();
+	    fixtureDef.shape = shape;
+	    body.createFixture(fixtureDef);
+	    shape.dispose();
+	    return new Tum(body, new Texture("tum.png"));
+	}
+
+	private Dino initializePoing() {
+		BodyDef bodyDef = new BodyDef();
+	    bodyDef.type = BodyDef.BodyType.DynamicBody;
+	    // Defina a posição inicial do Roar
+	    bodyDef.position.set(new Vector2(10, 50));
+
+	    Body body = world.createBody(bodyDef);
+
+	    PolygonShape shape = new PolygonShape();
+	    shape.setAsBox(20, 40); // Exemplo de tamanho
+	    FixtureDef fixtureDef = new FixtureDef();
+	    fixtureDef.shape = shape;
+	    body.createFixture(fixtureDef);
+	    shape.dispose();
+	    return new Poing(body, new Texture("poing.png"));
+	}
+
+	private Dino initializeRoar() {
+		BodyDef bodyDef = new BodyDef();
+	    bodyDef.type = BodyDef.BodyType.DynamicBody;
+	    // Defina a posição inicial do Roar
+	    bodyDef.position.set(new Vector2(10, 50));
+
+	    Body body = world.createBody(bodyDef);
+
+	    PolygonShape shape = new PolygonShape();
+	    shape.setAsBox(20, 40); // Exemplo de tamanho
+	    FixtureDef fixtureDef = new FixtureDef();
+	    fixtureDef.shape = shape;
+	    body.createFixture(fixtureDef);
+	    shape.dispose();
+	    return new Roar(body, new Texture("roar.png"));
+	}
+
 	@Override
 	public void render(float delta) {// sempre Ã© chamado para renderizar o mapa
 		handleInput();
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		tiled.viewMap(camera);
 		tiled.mapRender();
-		collidable.renderDebugLines(camera);
-		collidable.checkCollision();
 		tiled.beginRenderer();
-		dino.draw(tiled.getRenderer().getBatch());
 		tiled.endRenderer();
-		world.step(Gdx.graphics.getDeltaTime(), 5, 5);
-		System.out.println(dino.getY());
+		
+		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+		
+		currentDino.update(delta);
+		batch.begin();
+        currentDino.render(batch);
+        batch.end();
 
 	}
 
 	public void handleInput() {
-		//world.destroyBody(dino.getBody());
-		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-			dino = new Poing();
-			dino.setTexture(dino.changeDino());
-			dino = new Poing(new Sprite(dino.getTexture()), this);
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-			dino = new Tum();
-			dino.setTexture(dino.changeDino());
-			dino = new Tum(new Sprite(dino.getTexture()), this);
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-			dino = new Roar();
-			dino.setTexture(dino.changeDino());
-			dino = new Roar(new Sprite(dino.getTexture()), this);
-		}
+		// Troca de personagens
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) currentDino = roar;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) currentDino = poing;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) currentDino = tum;
+
+        // Movimento e habilidades do personagem
+        currentDino.handleInput();
 
 	}
 
@@ -144,6 +169,63 @@ public class PlayScreen implements Screen {
 	public void dispose() {
 		tiled.getMap().dispose();
 		tiled.getRenderer().dispose();
+		batch.dispose();
+	}
+
+	public Tiled getTiled() {
+		return tiled;
+	}
+
+	public void setTiled(Tiled tiled) {
+		this.tiled = tiled;
+	}
+
+	public Dino getRoar() {
+		return roar;
+	}
+
+	public void setRoar(Dino roar) {
+		this.roar = roar;
+	}
+
+	public Dino getPoing() {
+		return poing;
+	}
+
+	public void setPoing(Dino poing) {
+		this.poing = poing;
+	}
+
+	public Dino getTum() {
+		return tum;
+	}
+
+	public void setTum(Dino tum) {
+		this.tum = tum;
+	}
+
+	public Dino getCurrentDino() {
+		return currentDino;
+	}
+
+	public void setCurrentDino(Dino currentDino) {
+		this.currentDino = currentDino;
+	}
+
+	public Collidable getCollidable() {
+		return collidable;
+	}
+
+	public void setCollidable(Collidable collidable) {
+		this.collidable = collidable;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
 	}
 
 }

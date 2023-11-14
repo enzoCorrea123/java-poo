@@ -140,7 +140,7 @@ public class PlayScreen implements Screen {
         currentDino.handleInput();
 
 	}
-
+//	no momento ao rodar o código o player nasce na tela preta enquanto o mapa fica na ponta da tela. O player não se move e a troca de dinossauros fazem eles mudarem de posição
 	@Override
 	public void resize(int width, int height) {
 		camera.viewportWidth = width / 2;

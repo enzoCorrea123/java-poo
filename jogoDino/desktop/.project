@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Adinoventure-desktop</name>
+	<comment>Project Adinoventure-desktop created by Buildship.</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>assets</name>
+			<type>2</type>
+			<location>C:/Users/Aluno/Documents/GitHub/java-poo/jogoNovo/assets</location>
+		</link>
+	</linkedResources>
+</projectDescription>
